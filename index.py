@@ -38,7 +38,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def main_page():
-    return render_template('start.html')
+    return render_template('index.html')
 
 @app.route("/play", methods = ['GET','POST'])
 def game_page():
