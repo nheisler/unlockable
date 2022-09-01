@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
 <body style="background-color:LightGray;">
 
 <div style="text-align:center">
     <h1>Unlockable</h1>
     </br>
-    <h1>{{ v1 }}{{ v2 }}{{ v3 }}{{ v4 }}</h1>
-    <h2>Your solution was correct! The lock has been opened</h2>
+    <h1>{{ d1 }}{{ d2 }}{{ d3 }}{{ d4 }}</h1>
+    <h2>{{ message }}</h2>
     </br>
     <img src="{{url_for('static', filename='opened_lock.jpg')}}" width="250" height="200" />
 
