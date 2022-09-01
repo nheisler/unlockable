@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import pandas
 import random
 import atexit
@@ -40,15 +40,26 @@ app = Flask(__name__)
 def main_page():
     return render_template('start.html')
 
-@app.route("/play")
+@app.route("/play", methods = ['GET','POST'])
 def game_page():
     return render_template('game_page.html', hint1=df["clue"][index1], hint2=df["clue"][index2], hint3=df["clue"][index3], hint4=df["clue"][index4])
 
-@app.route("/solution")
+def checkAnswer(answer1, answer2, answer3, answer4):
+    if answer1 == str(df["value"][index1]) and answer2 == str(df["value"][index2]) and answer3 == str(df["value"][index3]) and answer4 == str(df["value"][index4]):
+        return True
+    else:
+        return False
+
+@app.route("/solution", methods=['GET', 'POST'])
 def solution_page():
+    if request.method == 'POST':
+        answer1 = request.form.get('answer1')
+        answer2 = request.form.get('answer2')
+        answer3 = request.form.get('answer3')
+        answer4 = request.form.get('answer4')
     finalMessage = "Your solution was correct! The lock has been opened"
     
-    if True:
+    if not checkAnswer(answer1, answer2, answer3, answer4):
         finalMessage = "Your solution was incorrect! The correct combination is "
         finalMessage += str(df["value"][index1])
         finalMessage += str(df["value"][index2])
@@ -56,4 +67,4 @@ def solution_page():
         finalMessage += str(df["value"][index4])
         finalMessage += " -- Try again tomorrow"
 
-    return render_template('solution.html', d1=1, d2=2, d3=3, d4=4, message=finalMessage)
+    return render_template('solution.html', d1=answer1, d2=answer2, d3=answer3, d4=answer4, message=finalMessage)
