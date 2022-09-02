@@ -3,6 +3,8 @@ import pandas
 import random
 import atexit
 from apscheduler.schedulers.background import BackgroundScheduler
+from pandas.io.json import json_normalize
+from airtable import airtable
 
 def setData():
     global df
@@ -11,7 +13,12 @@ def setData():
     global index3
     global index4
 
-    df = pandas.read_csv('clues.csv')
+    at = airtable.Airtable('appGBN0dHYTIp1VQW', 'keyccjDgGUMhj9hid')
+    df = pandas.json_normalize(at.get('Clues')['records'])
+    df = df[['fields.Value', 'fields.Hint']]
+    df = df.rename(columns={"fields.Value": "value", "fields.Hint": "clue"})
+    print(df)
+
     index1 = random.randint(0, (len(df.index) - 1))
     index2 = random.randint(0, (len(df.index) - 1))
     while index2 == index1:

@@ -10,7 +10,7 @@
 <body style="background-color:LightGray;">
 
 <div style="text-align:center">
-    <h1>Unlockable</h1>
+    <h1>Unlockably</h1>
 </div>
 </br>
 </br>
@@ -25,11 +25,12 @@
   <p>{{ hint4 }}</p>
   </br>
 
-  <form class="form-inline" method="POST" action = "{{ url_for('solution_page') }}">
-        <input type="text" id="answer1" name="answer1" class="form-control" size="5">
-        <input type="text" id="answer2" name="answer2" class="form-control" size="5">
-        <input type="text" id="answer3" name="answer3" class="form-control" size="5">
-        <input type="text" id="answer4" name="answer4" class="form-control" size="5">
+  <form autocomplete="off" class="form-inline" method="POST" action = "{{ url_for('solution_page') }}">
+        <input autocomplete="false" name="hidden" type="text" style="display:none;">
+        <input type="text" id="answer1" name="answer1" class="form-control" size="1">
+        <input type="text" id="answer2" name="answer2" class="form-control" size="1">
+        <input type="text" id="answer3" name="answer3" class="form-control" size="1">
+        <input type="text" id="answer4" name="answer4" class="form-control" size="1">
     </br>
     </br>
     <input class='btn btn-primary' type='submit' value='Submit'/>
