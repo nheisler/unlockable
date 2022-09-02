@@ -2,3 +2,4 @@ APScheduler==3.9.1
 Flask==2.1.0
 numpy>=1.14.1
 pandas==1.4.4
+airtable==0.4.8
