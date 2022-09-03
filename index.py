@@ -17,8 +17,7 @@ def setData():
     df = pandas.json_normalize(at.get('Clues')['records'])
     df = df[['fields.Value', 'fields.Hint']]
     df = df.rename(columns={"fields.Value": "value", "fields.Hint": "clue"})
-    print(df)
-
+    
     index1 = random.randint(0, (len(df.index) - 1))
     index2 = random.randint(0, (len(df.index) - 1))
     while index2 == index1:

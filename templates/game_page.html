@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -25,12 +26,12 @@
   <p>{{ hint4 }}</p>
   </br>
 
-  <form autocomplete="off" class="form-inline" method="POST" action = "{{ url_for('solution_page') }}">
+  <form id="ios" autocomplete="off" method="POST" action = "{{ url_for('solution_page') }}">
         <input autocomplete="false" name="hidden" type="text" style="display:none;">
-        <input type="text" id="answer1" name="answer1" class="form-control" size="1">
-        <input type="text" id="answer2" name="answer2" class="form-control" size="1">
-        <input type="text" id="answer3" name="answer3" class="form-control" size="1">
-        <input type="text" id="answer4" name="answer4" class="form-control" size="1">
+        <input type="password" id="answer1" name="answer1" maxlength="1" onkeyup="moveOnMax(this,'answer2')">
+        <input type="password" id="answer2" name="answer2" maxlength="1" onkeyup="moveOnMax(this,'answer3')">
+        <input type="password" id="answer3" name="answer3" maxlength="1" onkeyup="moveOnMax(this,'answer4')">
+        <input type="password" id="answer4" name="answer4" maxlength="1">
     </br>
     </br>
     <input class='btn btn-primary' type='submit' value='Submit'/>
@@ -39,3 +40,11 @@
 
 </body>
 </html>
+
+<script type = "text/javascript">  
+  moveOnMax =function (field, nextFieldID) {
+    if (field.value.length == 1) {
+        document.getElementById(nextFieldID).focus();
+    }
+  }
+</script>
