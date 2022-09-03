@@ -22,13 +22,46 @@
 <div class="container" style="text-align:center">
   </br>
 
-  <form id="ios" autocomplete="off" method="POST" action = "{{ url_for('solution_page') }}">
+  <form id="ios" autocomplete="off">
         <input autocomplete="false" name="hidden" type="text" style="display:none;">
         <input type="password" id="answer1" name="answer1" maxlength="1" onkeyup="moveOnMax(this,'answer2')">
         <input type="password" id="answer2" name="answer2" maxlength="1" onkeyup="moveOnMax(this,'answer3')">
         <input type="password" id="answer3" name="answer3" maxlength="1" onkeyup="moveOnMax(this,'answer4')">
-        <input type="password" id="answer4" name="answer4" maxlength="1" onkeyup="submitForm(this,'ios')">
+        <input type="password" id="answer4" name="answer4" maxlength="1" onkeyup="submitForm(this,'ios',{{answer1}},{{answer2}},{{answer3}},{{answer4}})">
   </form>
+</div>
+
+<div class="modal fade" id="SuccessModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="successModalLabel">Success! You've unlocked the device</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Come back tomorrow for a new puzzle</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="FailureModal" tabindex="-1" role="dialog" aria-labelledby="failureModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="failureModalLabel">You've failed to unlock the device!</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>The correct answer is {{ answer1 }}-{{ answer2 }}-{{ answer3 }}-{{ answer4 }}</p>
+        <p>Try again tomorrow</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 </body>
@@ -41,9 +74,18 @@
     }
   }
 
-  submitForm =function (field, formName){
+  submitForm =function (field, formName, ans1, ans2, ans3, ans4){
     if (field.value.length == 1){
-        document.getElementById(formName).submit();
+      var submitted1 = document.getElementById("answer1").value;
+      var submitted2 = document.getElementById("answer2").value;
+      var submitted3 = document.getElementById("answer3").value;
+      var submitted4 = document.getElementById("answer4").value;
+      if (submitted1 == ans1 && submitted2 == ans2 && submitted3 == ans3 && submitted4 == ans4){
+        $('#SuccessModal').modal()
+      }
+      else{
+        $('#FailureModal').modal()
+      }
     }
   }
 </script>
