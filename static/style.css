@@ -5,3 +5,55 @@ form#ios input[type=password]{
     font-size: 2em;
     border: 1px solid #000;
   }
+
+.boxl {
+  width: 300px;
+  margin: 15px auto;
+  border-radius: 15px;
+  background: #8e8e93;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  font-weight: 900;
+  font-family: arial;
+  position: relative;
+}
+
+.boxr {
+  width: 300px;
+  margin: 15px auto;
+  border-radius: 15px;
+  background: #5fc9f8;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  font-weight: 900;
+  font-family: arial;
+  position: relative;
+}
+
+.sb1:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 15px solid #8e8e93;
+  border-right: 15px solid transparent;
+  border-top: 15px solid #8e8e93;
+  border-bottom: 15px solid transparent;
+  right: -16px;
+  top: 0px;
+}
+
+.sb2:before {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  border-left: 15px solid transparent;
+  border-right: 15px solid #5fc9f8;
+  border-top: 15px solid #5fc9f8;
+  border-bottom: 15px solid transparent;
+  left: -16px;
+  top: 0px;
+}

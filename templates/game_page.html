@@ -15,15 +15,13 @@
 </div>
 </br>
 </br>
+
+<div class="boxr sb2">1) {{ hint1 }}</div>
+<div class="boxl sb1">2) {{ hint2 }}</div>
+<div class="boxr sb2">3) {{ hint3 }}</div>
+<div class="boxl sb1">4) {{ hint4 }}</div>
+
 <div class="container" style="text-align:center">
-  <b>(1)</b>
-  <p>{{ hint1 }}</p>
-  <b>(2)</b>
-  <p>{{ hint2 }}</p>
-  <b>(3)</b>
-  <p>{{ hint3 }}</p>
-  <b>(4)</b>
-  <p>{{ hint4 }}</p>
   </br>
 
   <form id="ios" autocomplete="off" method="POST" action = "{{ url_for('solution_page') }}">
