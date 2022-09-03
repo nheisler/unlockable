@@ -3,6 +3,7 @@ import pandas
 import random
 import atexit
 from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.cron import CronTrigger
 from pandas.io.json import json_normalize
 from airtable import airtable
 
@@ -31,16 +32,22 @@ def setData():
     while index4 == index1 or index4 == index2 or index4 == index3:
         index4 = random.randint(0, (len(df.index) - 1))
 
-scheduler = BackgroundScheduler()
-scheduler.add_job(func=setData, trigger="cron", day_of_week='mon-sun', hour=1, minute=0)
-scheduler.start()
-
-# Shut down the scheduler when exiting the app
-atexit.register(lambda: scheduler.shutdown())
-
-setData()
-
 app = Flask(__name__)
+
+@app.before_first_request
+def before_first_request():
+    print("setup scheduler")
+    scheduler = BackgroundScheduler()
+    trigger = CronTrigger(
+            year="*", month="*", day="*", hour="1", minute="0", second="5"
+        )
+    scheduler.add_job(func=setData, trigger=trigger)
+    scheduler.start()
+
+    # Shut down the scheduler when exiting the app
+    atexit.register(lambda: scheduler.shutdown())
+
+    setData()
 
 @app.route("/")
 def main_page():
@@ -74,3 +81,6 @@ def solution_page():
         finalMessage += " -- Try again tomorrow"
 
     return render_template('solution.html', d1=answer1, d2=answer2, d3=answer3, d4=answer4, message=finalMessage)
+
+    if __name__ == '__main__':
+        app.run()

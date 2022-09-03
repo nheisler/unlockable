@@ -13,8 +13,6 @@
 <div style="text-align:center">
     <h1>Unlockably</h1>
 </div>
-</br>
-</br>
 
 <div class="boxr sb2">1) {{ hint1 }}</div>
 <div class="boxl sb1">2) {{ hint2 }}</div>
@@ -29,10 +27,7 @@
         <input type="password" id="answer1" name="answer1" maxlength="1" onkeyup="moveOnMax(this,'answer2')">
         <input type="password" id="answer2" name="answer2" maxlength="1" onkeyup="moveOnMax(this,'answer3')">
         <input type="password" id="answer3" name="answer3" maxlength="1" onkeyup="moveOnMax(this,'answer4')">
-        <input type="password" id="answer4" name="answer4" maxlength="1">
-    </br>
-    </br>
-    <input class='btn btn-primary' type='submit' value='Submit'/>
+        <input type="password" id="answer4" name="answer4" maxlength="1" onkeyup="submitForm(this,'ios')">
   </form>
 </div>
 
@@ -43,6 +38,12 @@
   moveOnMax =function (field, nextFieldID) {
     if (field.value.length == 1) {
         document.getElementById(nextFieldID).focus();
+    }
+  }
+
+  submitForm =function (field, formName){
+    if (field.value.length == 1){
+        document.getElementById(formName).submit();
     }
   }
 </script>
