@@ -9,28 +9,10 @@ from airtable import airtable
 
 def setData():
     global df
-    global index1
-    global index2
-    global index3
-    global index4
-
     at = airtable.Airtable('appGBN0dHYTIp1VQW', 'keyccjDgGUMhj9hid')
-    df = pandas.json_normalize(at.get('Clues')['records'])
+    df = pandas.json_normalize(at.get('DailyAnswers')['records'])
     df = df[['fields.Value', 'fields.Hint']]
     df = df.rename(columns={"fields.Value": "value", "fields.Hint": "clue"})
-    
-    index1 = random.randint(0, (len(df.index) - 1))
-    index2 = random.randint(0, (len(df.index) - 1))
-    while index2 == index1:
-        index2 = random.randint(0, (len(df.index) - 1))
-
-    index3 = random.randint(0, (len(df.index) - 1))
-    while index3 == index1 or index3 == index2:
-        index3 = random.randint(0, (len(df.index) - 1))
-
-    index4 = random.randint(0, (len(df.index) - 1))
-    while index4 == index1 or index4 == index2 or index4 == index3:
-        index4 = random.randint(0, (len(df.index) - 1))
 
 app = Flask(__name__)
 
@@ -55,7 +37,7 @@ def main_page():
 
 @app.route("/play", methods = ['GET','POST'])
 def game_page():
-    return render_template('game_page.html', hint1=df["clue"][index1], hint2=df["clue"][index2], hint3=df["clue"][index3], hint4=df["clue"][index4], answer1=df["value"][index1], answer2=df["value"][index2], answer3=df["value"][index3], answer4=df["value"][index4])
+    return render_template('game_page.html', hint1=df["clue"][0], hint2=df["clue"][1], hint3=df["clue"][2], hint4=df["clue"][3], answer1=df["value"][0], answer2=df["value"][1], answer3=df["value"][2], answer4=df["value"][3])
 
-    if __name__ == '__main__':
-        app.run()
+if __name__ == '__main__':
+    app.run()
