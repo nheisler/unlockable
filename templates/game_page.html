@@ -43,6 +43,8 @@
       <div class="modal-body">
         <p>Come back tomorrow for a new puzzle</p>
       </div>
+      <div class="modal-footer" id="successFooter">
+      </div>
     </div>
   </div>
 </div>
@@ -59,6 +61,8 @@
       <div class="modal-body">
         <p>The correct answer is {{ answer1 }}-{{ answer2 }}-{{ answer3 }}-{{ answer4 }}</p>
         <p>Try again tomorrow</p>
+      </div>
+      <div class="modal-footer" id="failureFooter">
       </div>
     </div>
   </div>
@@ -81,9 +85,35 @@
       var submitted3 = document.getElementById("answer3").value;
       var submitted4 = document.getElementById("answer4").value;
       if (submitted1 == ans1 && submitted2 == ans2 && submitted3 == ans3 && submitted4 == ans4){
+        var wins = localStorage.getItem("game_wins");
+        if (wins == null){
+          wins = 0
+        }
+        wins = +wins + 1
+        var losses = localStorage.getItem("game_losses");
+        if (losses == null){
+          losses = 0
+        }
+        var w_percent = 100 * +wins / (+wins + +losses)
+        localStorage.setItem("game_wins", (wins));
+        var footerContent = "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<p>Win %: " + w_percent + "</p>";
+        $("#successFooter").html(footerContent);  
         $('#SuccessModal').modal()
       }
       else{
+        var wins = localStorage.getItem("game_wins");
+        if (wins == null){
+          wins = 0
+        }
+        var losses = localStorage.getItem("game_losses");
+        if (losses == null){
+          losses = 0
+        }
+        losses = +losses + 1
+        var w_percent = 100 * +wins / (+wins + +losses)
+        localStorage.setItem("game_losses", (losses));
+        var footerContent = "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<p>Win %: " + w_percent + "</p>";
+        $("#failureFooter").html(footerContent);  
         $('#FailureModal').modal()
       }
     }
