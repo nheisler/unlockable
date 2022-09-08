@@ -58,7 +58,7 @@ def main_page():
 
 @app.route("/play", methods = ['GET','POST'])
 def game_page():
-    while startup_thread.isAlive():
+    while startup_thread.is_alive():
         time.sleep(1)
     return render_template('game_page.html', hint1=df["clue"][idx0], hint2=df["clue"][idx1], hint3=df["clue"][idx2], hint4=df["clue"][idx3], answer1=df["value"][idx0], answer2=df["value"][idx1], answer3=df["value"][idx2], answer4=df["value"][idx3])
 
