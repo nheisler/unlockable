@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-<body style="background-color:LightGray;">
+<body onload="checkIfPlayed();" style="background-color:LightGray;">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5QKXBJQ3YM"></script>
 <script>
@@ -46,9 +46,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h2 class="modal-title" id="successModalLabel">Success! You've unlocked the device</h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
       <div class="modal-body">
         <p>The correct answer is {{ answer1 }}-{{ answer2 }}-{{ answer3 }}-{{ answer4 }}</p>
@@ -64,9 +61,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h2 class="modal-title" id="failureModalLabel">You've failed to unlock the device!</h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
       <div class="modal-body" id="failureBody">
       </div>
@@ -92,7 +86,10 @@
       var submitted2 = document.getElementById("answer2").value;
       var submitted3 = document.getElementById("answer3").value;
       var submitted4 = document.getElementById("answer4").value;
-      if (submitted1 == ans1 && submitted2 == ans2 && submitted3 == ans3 && submitted4 == ans4){
+      if (submitted1 == ans1 && submitted2 == ans2 && submitted3 == ans3 && submitted4 == ans4){ 
+        var today = new Date().toLocaleDateString()
+        localStorage.setItem("last_date_played", today);
+        localStorage.setItem("last_result", "win");
         var wins = localStorage.getItem("game_wins");
         if (wins == null){
           wins = 0
@@ -106,9 +103,19 @@
         localStorage.setItem("game_wins", (wins));
         var footerContent = "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<p>Win %: " + Math.floor(w_percent) + "</p>";
         $("#successFooter").html(footerContent);  
-        $('#SuccessModal').modal()
+        $('#SuccessModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
       }
       else{
+        var today = new Date().toLocaleDateString()
+        localStorage.setItem("last_date_played", today);
+        localStorage.setItem("last_result", "loss");
+        localStorage.setItem("bad1", submitted1);
+        localStorage.setItem("bad2", submitted2);
+        localStorage.setItem("bad3", submitted3);
+        localStorage.setItem("bad4", submitted4);
         var wins = localStorage.getItem("game_wins");
         if (wins == null){
           wins = 0
@@ -124,7 +131,62 @@
         var bodyContent = "<p>You answered " + submitted1 + "-" + submitted2 + "-" + submitted3 + "-" + submitted4 + "</p>" + "<p>The correct answer is " + ans1 + "-" + ans2 + "-" + ans3 + "-" + ans4 + "</p>" + "<p>Try again tomorrow</p>"
         $("#failureBody").html(bodyContent); 
         $("#failureFooter").html(footerContent);  
-        $('#FailureModal').modal()
+        $('#FailureModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+      }
+    }
+  }
+
+  checkIfPlayed =function () {
+    var last_date_played = localStorage.getItem("last_date_played");
+    var today = new Date().toLocaleDateString()
+    if (last_date_played == today) {
+      var last_result = localStorage.getItem("last_result");
+      if (last_result == "win")
+      {
+        var wins = localStorage.getItem("game_wins");
+        if (wins == null){
+          wins = 0
+        }
+        var losses = localStorage.getItem("game_losses");
+        if (losses == null){
+          losses = 0
+        }
+        var w_percent = 100 * +wins / (+wins + +losses)
+        var footerContent = "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<p>Win %: " + Math.floor(w_percent) + "</p>";
+        $("#successFooter").html(footerContent);  
+        $('#SuccessModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+      }
+      else
+      {
+        var bad1 = localStorage.getItem("bad1");
+        var bad2 = localStorage.getItem("bad2");
+        var bad3 = localStorage.getItem("bad3");
+        var bad4 = localStorage.getItem("bad4");
+        var wins = localStorage.getItem("game_wins");
+        if (wins == null){
+          wins = 0
+        }
+        var losses = localStorage.getItem("game_losses");
+        if (losses == null){
+          losses = 0
+        }
+        losses = +losses + 1
+        var w_percent = 100 * +wins / (+wins + +losses)
+        localStorage.setItem("game_losses", (losses));
+        var footerContent = "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<p>Win %: " + Math.floor(w_percent) + "</p>";
+        var bodyContent = "<p>You answered " + bad1 + "-" + bad2 + "-" + bad3 + "-" + bad4 + "</p>" + "<p>The correct answer is " + ans1 + "-" + ans2 + "-" + ans3 + "-" + ans4 + "</p>" + "<p>Try again tomorrow</p>"
+        $("#failureBody").html(bodyContent); 
+        $("#failureFooter").html(footerContent);  
+        $('#FailureModal').modal({
+            backdrop: 'static',
+            keyboard: false
+        });
       }
     }
   }
