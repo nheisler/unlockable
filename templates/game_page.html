@@ -20,7 +20,7 @@
 </script>
 
 <div style="text-align:center">
-  <img src="../static/Unlockably_Logo.png" style='height: 100%; width: 100%; object-fit: contain' alt="Logo">
+  <img src="../static/Unlockably_Logo.png" style='max-width: 300px; height: 100%; width: 100%; object-fit: contain' alt="Logo">
 </div>
 
 <div class="boxr sb2">1) {{ hint1 }}</div>
@@ -38,6 +38,7 @@
         <input type="password" id="answer3" name="answer3" maxlength="1" onkeyup="moveOnMax(this,'answer4')">
         <input type="password" id="answer4" name="answer4" maxlength="1" onkeyup="submitForm(this,'ios',{{answer1}},{{answer2}},{{answer3}},{{answer4}})">
   </form>
+</br>
 </div>
 
 <div class="modal fade" id="SuccessModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
