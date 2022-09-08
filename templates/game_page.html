@@ -33,10 +33,10 @@
 
   <form id="ios" autocomplete="off">
         <input autocomplete="false" name="hidden" type="text" style="display:none;">
-        <input type="password" id="answer1" name="answer1" maxlength="1" onkeyup="moveOnMax(this,'answer2')">
-        <input type="password" id="answer2" name="answer2" maxlength="1" onkeyup="moveOnMax(this,'answer3')">
-        <input type="password" id="answer3" name="answer3" maxlength="1" onkeyup="moveOnMax(this,'answer4')">
-        <input type="password" id="answer4" name="answer4" maxlength="1" onkeyup="submitForm(this,'ios',{{answer1}},{{answer2}},{{answer3}},{{answer4}})">
+        <input type="password" id="answer1" name="answer1" maxlength="1" pattern="[0-9]" inputmode="numeric" onkeyup="moveOnMax(this,'answer2')">
+        <input type="password" id="answer2" name="answer2" maxlength="1" pattern="[0-9]" inputmode="numeric" onkeyup="moveOnMax(this,'answer3')">
+        <input type="password" id="answer3" name="answer3" maxlength="1" pattern="[0-9]" inputmode="numeric" onkeyup="moveOnMax(this,'answer4')">
+        <input type="password" id="answer4" name="answer4" maxlength="1" pattern="[0-9]" inputmode="numeric" onkeyup="submitForm(this,'ios',{{answer1}},{{answer2}},{{answer3}},{{answer4}})">
   </form>
 </br>
 </div>

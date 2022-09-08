@@ -19,17 +19,17 @@ def setData():
     df = pandas.read_csv("static/clues.csv")
 
     idx0 = (datetime.datetime.utcnow() - datetime.datetime(1970,1,1)).days % len(df.index) * 4
-    if idx0 > (len(df.index) - 1):
-        idx0 = 0
+    while idx0 > (len(df.index) - 1):
+        idx0 = idx0 - (len(df.index) - 1)
     idx1 = idx0 + 1
-    if idx1 > (len(df.index) - 1):
-        idx1 = 0
+    while idx1 > (len(df.index) - 1):
+        idx1 = idx1 - (len(df.index) - 1)
     idx2 = idx1 + 1
     if idx2 > (len(df.index) - 1):
-        idx2 = 0
+        idx2 = idx2 - (len(df.index) - 1)
     idx3 = idx2 + 1
     if idx3 > (len(df.index) - 1):
-        idx3 = 0
+        idx3 = idx3 - (len(df.index) - 1)
 
 def startupThread():
     scheduler = BackgroundScheduler()
