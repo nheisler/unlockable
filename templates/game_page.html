@@ -9,6 +9,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body style="background-color:LightGray;">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5QKXBJQ3YM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5QKXBJQ3YM');
+</script>
 
 <div style="text-align:center">
   <img src="../static/Unlockably_Logo.png" style='height: 100%; width: 100%; object-fit: contain' alt="Logo">
@@ -41,7 +50,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Come back tomorrow for a new puzzle</p>
+        <p>The correct answer is {{ answer1 }}-{{ answer2 }}-{{ answer3 }}-{{ answer4 }}</p>
       </div>
       <div class="modal-footer" id="successFooter">
       </div>
@@ -58,9 +67,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <p>The correct answer is {{ answer1 }}-{{ answer2 }}-{{ answer3 }}-{{ answer4 }}</p>
-        <p>Try again tomorrow</p>
+      <div class="modal-body" id="failureBody">
       </div>
       <div class="modal-footer" id="failureFooter">
       </div>
@@ -96,7 +103,7 @@
         }
         var w_percent = 100 * +wins / (+wins + +losses)
         localStorage.setItem("game_wins", (wins));
-        var footerContent = "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<p>Win %: " + w_percent + "</p>";
+        var footerContent = "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<p>Win %: " + Math.floor(w_percent) + "</p>";
         $("#successFooter").html(footerContent);  
         $('#SuccessModal').modal()
       }
@@ -112,7 +119,9 @@
         losses = +losses + 1
         var w_percent = 100 * +wins / (+wins + +losses)
         localStorage.setItem("game_losses", (losses));
-        var footerContent = "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<p>Win %: " + w_percent + "</p>";
+        var footerContent = "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<p>Win %: " + Math.floor(w_percent) + "</p>";
+        var bodyContent = "<p>You answered " + submitted1 + "-" + submitted2 + "-" + submitted3 + "-" + submitted4 + "</p>" + "<p>The correct answer is " + ans1 + "-" + ans2 + "-" + ans3 + "-" + ans4 + "</p>" + "<p>Try again tomorrow</p>"
+        $("#failureBody").html(bodyContent); 
         $("#failureFooter").html(footerContent);  
         $('#FailureModal').modal()
       }

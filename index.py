@@ -1,18 +1,32 @@
 from flask import Flask, render_template, request
 import pandas
-import random
 import atexit
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from pandas.io.json import json_normalize
-from airtable import airtable
+import datetime
 
 def setData():
     global df
-    at = airtable.Airtable('appGBN0dHYTIp1VQW', 'keyccjDgGUMhj9hid')
-    df = pandas.json_normalize(at.get('DailyAnswers')['records'])
-    df = df[['fields.Value', 'fields.Hint']]
-    df = df.rename(columns={"fields.Value": "value", "fields.Hint": "clue"})
+    global idx0
+    global idx1
+    global idx2
+    global idx3
+
+    df = pandas.read_csv("static/clues.csv")
+
+    idx0 = (datetime.datetime.utcnow() - datetime.datetime(1970,1,1)).days % len(df.index) * 4
+    if idx0 > (len(df.index) - 1):
+        idx0 = 0
+    idx1 = idx0 + 1
+    if idx1 > (len(df.index) - 1):
+        idx1 = 0
+    idx2 = idx1 + 1
+    if idx2 > (len(df.index) - 1):
+        idx2 = 0
+    idx3 = idx2 + 1
+    if idx3 > (len(df.index) - 1):
+        idx3 = 0
 
 app = Flask(__name__)
 
@@ -37,7 +51,7 @@ def main_page():
 
 @app.route("/play", methods = ['GET','POST'])
 def game_page():
-    return render_template('game_page.html', hint1=df["clue"][0], hint2=df["clue"][1], hint3=df["clue"][2], hint4=df["clue"][3], answer1=df["value"][0], answer2=df["value"][1], answer3=df["value"][2], answer4=df["value"][3])
+    return render_template('game_page.html', hint1=df["clue"][idx0], hint2=df["clue"][idx1], hint3=df["clue"][idx2], hint4=df["clue"][idx3], answer1=df["value"][idx0], answer2=df["value"][idx1], answer3=df["value"][idx2], answer4=df["value"][idx3])
 
 if __name__ == '__main__':
     app.run()
