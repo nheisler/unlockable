@@ -8,7 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-<body onload="checkIfPlayed();" style="background-color:LightGray;">
+<body onload="checkIfPlayed({{answer1}},{{answer2}},{{answer3}},{{answer4}});" style="background-color:LightGray;">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5QKXBJQ3YM"></script>
 <script>
@@ -139,7 +139,7 @@
     }
   }
 
-  checkIfPlayed =function () {
+  checkIfPlayed =function (ans1, ans2, ans3, ans4) {
     var last_date_played = localStorage.getItem("last_date_played");
     var today = new Date().toLocaleDateString()
     if (last_date_played == today) {
@@ -176,7 +176,6 @@
         if (losses == null){
           losses = 0
         }
-        losses = +losses + 1
         var w_percent = 100 * +wins / (+wins + +losses)
         localStorage.setItem("game_losses", (losses));
         var footerContent = "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<p>Win %: " + Math.floor(w_percent) + "</p>";
